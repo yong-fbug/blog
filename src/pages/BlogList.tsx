@@ -73,7 +73,8 @@ export const BlogList = () => {
                   <span>
                     <Edit
                       onClick={() => setUpdateBlog(b)}
-                      className="hover:text-green-600"
+                      size={20}
+                      className="hover:text-green-600 transition"
                     />
                   </span>
                 )}

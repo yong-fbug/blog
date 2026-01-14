@@ -12,19 +12,24 @@ export const Login = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
-  const [isError, setIsError] = useState(false);
+  const [isError, setIsError] = useState<string | null>(null);
 
   const toggleShowPassword = () => setShowPassword(!showPassword);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsError(false);
+    setIsError(null);
 
     try {
       await dispatch(login({ email, password })).unwrap();
       navigate("/dashboard");
-    } catch (error) {
-      setIsError(true);
+    } catch (error: any) {
+      console.log(error.message, "Error Login");
+      if (error?.message.includes("password")) {
+        setIsError("Password Incorrect");
+      } else {
+        setIsError("Failed to Login");
+      }
       console.log("Login failed", error);
     }
   };
@@ -105,7 +110,7 @@ export const Login = () => {
               Login
             </button>
             {isError && (
-              <p className="text-red-500 text-center text-sm">Login failed</p>
+              <p className="text-red-500 text-center text-sm">{isError}</p>
             )}
           </div>
         </form>

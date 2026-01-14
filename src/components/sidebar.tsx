@@ -35,7 +35,7 @@ export const Sidebar = () => {
         </div>
 
         <button onClick={handleLogout}>
-          <LogOutIcon className="text-white" />
+          <LogOutIcon className="text-white cursor-pointer" />
         </button>
       </div>
     </div>
