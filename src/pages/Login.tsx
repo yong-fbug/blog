@@ -36,10 +36,9 @@ export const Login = () => {
 
   return (
     <div className="flex min-h-screen bg-gray-50">
-      {/* Center content */}
       <div className="flex-1 flex flex-col items-center justify-center px-6">
         <h1 className="text-4xl font-semibold text-gray-800 mb-3 text-center">
-          Welcome to{" "}
+          Welcome to
           <span className="text-teal-500 font-bold">Blog by Flores</span>
         </h1>
         <p className="text-gray-600 text-center max-w-sm leading-relaxed">
@@ -48,7 +47,6 @@ export const Login = () => {
         </p>
       </div>
 
-      {/* Right login form */}
       <div className="flex items-center justify-end px-6">
         <form
           onSubmit={handleLogin}

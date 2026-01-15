@@ -41,7 +41,6 @@ export const Register = () => {
   const toggleShowPassword = () => setShowPassword(!showPassword);
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50">
-      {/* Right register form */}
       <div className=" px-6">
         <form
           onSubmit={handleRegister}
