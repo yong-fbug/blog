@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../app/hooks";
 import { Eye, EyeOff } from "lucide-react";
@@ -16,12 +16,25 @@ export const Login = () => {
 
   const toggleShowPassword = () => setShowPassword(!showPassword);
 
+  useEffect(() => {
+    const savedEmail = localStorage.getItem("email");
+    if (savedEmail) {
+      setEmail(savedEmail);
+      setRememberMe(true);
+    }
+  }, []);
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsError(null);
 
     try {
       await dispatch(login({ email, password })).unwrap();
+      if (rememberMe) {
+        localStorage.setItem("email", email);
+      } else {
+        localStorage.removeItem("email");
+      }
       navigate("/dashboard");
     } catch (error: any) {
       console.log(error.message, "Error Login");

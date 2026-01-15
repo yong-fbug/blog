@@ -9,7 +9,7 @@ interface AuthState {
 
 const initialState: AuthState = {
   user: null,
-  loading: false,
+  loading: true,
 };
 
 export const register = createAsyncThunk(
@@ -37,12 +37,17 @@ export const login = createAsyncThunk(
       password,
     });
     if (error) throw error;
-    return data;
+    return data.user;
   }
 );
 
 export const logout = createAsyncThunk("auth/logout", async () => {
   await supabase.auth.signOut();
+});
+
+export const getSession = createAsyncThunk("auth/getSession", async () => {
+  const { data } = await supabase.auth.getSession();
+  return data.session;
 });
 
 const authSlice = createSlice({
@@ -59,6 +64,9 @@ const authSlice = createSlice({
       })
       .addCase(logout.fulfilled, (state) => {
         state.user = null;
+      })
+      .addCase(getSession.fulfilled, (state, action) => {
+        state.user = action.payload?.user ?? null;
       });
   },
 });

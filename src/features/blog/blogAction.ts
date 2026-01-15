@@ -20,7 +20,7 @@ export const createBlog = createAsyncThunk(
       title,
       content,
       user_id: user?.id,
-      user_name: user?.user_metadata.username,
+      user_name: user?.user_metadata.user_name,
     });
     if (error) throw error;
     return data;

@@ -173,7 +173,7 @@ export const BlogList = () => {
                 <h2 className="text-lg font-semibold text-gray-800 mb-2">
                   Update Successfully
                 </h2>
-                <Trash className="text-red-700" />
+                <Trash className="green-red-700" />
               </div>
               <p className="text-sm text-gray-600 mb-4">
                 Your blog post has been updated.
@@ -181,7 +181,7 @@ export const BlogList = () => {
 
               <button
                 onClick={() => setIsBlogUpdated(false)}
-                className="w-full bg-red-600 text-white py-2 rounded hover:bg-red-700 transition"
+                className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition"
               >
                 OK
               </button>

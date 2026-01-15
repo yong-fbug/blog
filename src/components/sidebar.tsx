@@ -22,9 +22,8 @@ export const Sidebar = () => {
         <p className="text-white font-bold tracking-wider">BLOG</p>
 
         <div className="relative group">
-          <button>
-            <BlogCreate />
-          </button>
+          <BlogCreate />
+
           <span
             className="absolute -top-6 left-1/2 -translate-x-1/2 bg-gray-800
            text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 
