@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../app/hooks";
-import { logout } from "../features/auth/authSlice";
+import { logout } from "../features/auth/authUser";
 import { LogOutIcon } from "lucide-react";
 import { BlogCreate } from "../pages/BlogCreate";
 

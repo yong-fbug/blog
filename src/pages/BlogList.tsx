@@ -4,7 +4,7 @@ import {
   deleteBlogs,
   fetchBlogs,
   updateBlogs,
-} from "../features/blog/blogSlice";
+} from "../features/blog/blogAction";
 import { supabase } from "../services/supaBaseClient";
 import { Edit, Trash } from "lucide-react";
 import type { BlogTypes } from "../features/blog/types";
@@ -15,7 +15,8 @@ export const BlogList = () => {
   const blogs = useAppSelector((s) => s.blog.blogs);
   const [currentUser, setCurrentUser] = useState<string>("");
   const [updateBlog, setUpdateBlog] = useState<BlogTypes | null>(null);
-  const [isBlogDeleted, setisBlogDeleted] = useState<boolean>(false);
+  const [isBlogDeleted, setIsBlogDeleted] = useState<boolean>(false);
+  const [isBlogUpdated, setIsBlogUpdated] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -37,6 +38,7 @@ export const BlogList = () => {
 
     try {
       await dispatch(updateBlogs(updateBlog)).unwrap();
+      setIsBlogUpdated(true);
       setUpdateBlog(null);
       dispatch(fetchBlogs(page));
     } catch (error) {
@@ -47,7 +49,7 @@ export const BlogList = () => {
   const handleDeleteBlog = async (id: number) => {
     try {
       await dispatch(deleteBlogs(id)).unwrap();
-      setisBlogDeleted(true);
+      setIsBlogDeleted(true);
     } catch (error) {
       console.log("Deleted failed", error);
     }
@@ -87,7 +89,7 @@ export const BlogList = () => {
 
             {/* Blog update */}
             {updateBlog?.id === b.id && (
-              <form>
+              <form onSubmit={handleUpdateBlog}>
                 <input
                   type="text"
                   name="title"
@@ -114,8 +116,7 @@ export const BlogList = () => {
 
                 <div className="flex gap-2 mt-2">
                   <button
-                    type="button"
-                    onClick={handleUpdateBlog}
+                    type="submit"
                     className="px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700 transition"
                   >
                     Save
@@ -156,7 +157,30 @@ export const BlogList = () => {
               </p>
 
               <button
-                onClick={() => setisBlogDeleted(false)}
+                onClick={() => setIsBlogDeleted(false)}
+                className="w-full bg-red-600 text-white py-2 rounded hover:bg-red-700 transition"
+              >
+                OK
+              </button>
+            </div>
+          </div>
+        )}
+
+        {isBlogUpdated && (
+          <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+            <div className="bg-white rounded-lg p-6 w-80 shadow-lg">
+              <div className=" flex items-center justify-between">
+                <h2 className="text-lg font-semibold text-gray-800 mb-2">
+                  Update Successfully
+                </h2>
+                <Trash className="text-red-700" />
+              </div>
+              <p className="text-sm text-gray-600 mb-4">
+                Your blog post has been updated.
+              </p>
+
+              <button
+                onClick={() => setIsBlogUpdated(false)}
                 className="w-full bg-red-600 text-white py-2 rounded hover:bg-red-700 transition"
               >
                 OK

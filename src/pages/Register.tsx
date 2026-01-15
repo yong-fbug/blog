@@ -2,7 +2,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../app/hooks";
-import { register } from "../features/auth/authSlice";
+import { register } from "../features/auth/authUser";
 
 export const Register = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);

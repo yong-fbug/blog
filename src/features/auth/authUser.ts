@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { supabase } from "../../services/supaBaseClient";
 import type { UserTypes } from "./types";
+import { supabase } from "../../services/supaBaseClient";
 
 interface AuthState {
   user: unknown | null;
@@ -14,7 +14,7 @@ const initialState: AuthState = {
 
 export const register = createAsyncThunk(
   "auth/register",
-  async ({ email, username, password }: UserTypes) => {
+  async ({ email, password, username }: UserTypes) => {
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -25,14 +25,7 @@ export const register = createAsyncThunk(
       },
     });
     if (error) throw error;
-    if (!data.user) throw new Error("User not created");
-
-    const { error: profileError } = await supabase
-      .from("profiles")
-      .insert({ id: data.user.id, email, username });
-    if (profileError) throw profileError;
-
-    return data.user;
+    return data;
   }
 );
 
@@ -43,9 +36,8 @@ export const login = createAsyncThunk(
       email,
       password,
     });
-    if (error) throw console.error("error");
-
-    return data.user;
+    if (error) throw error;
+    return data;
   }
 );
 

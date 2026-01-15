@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../app/hooks";
 import { Eye, EyeOff } from "lucide-react";
-import { login } from "../features/auth/authSlice";
+import { login } from "../features/auth/authUser";
 
 export const Login = () => {
   const dispatch = useAppDispatch();

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAppDispatch } from "../app/hooks";
-import { createBlog, fetchBlogs } from "../features/blog/blogSlice";
+import { createBlog, fetchBlogs } from "../features/blog/blogAction";
 import { Check, Plus } from "lucide-react";
 
 export const BlogCreate = () => {
