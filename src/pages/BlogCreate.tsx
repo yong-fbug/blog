@@ -37,48 +37,62 @@ export const BlogCreate = () => {
       </div>
 
       {openCreateBlog && (
-        <form
-          onSubmit={handleCreateBlog}
-          className="absolute top-0 left-20 mt-2 bg-white p-4 rounded-lg shadow-lg w-72 z-50 flex flex-col gap-3"
+        <div
+          className="fixed inset-0 bg-black/60 flex items-center justify-center z-50"
+          onClick={() => setOpenCreateBlog((prev) => !prev)}
         >
-          <div className="flex flex-col">
-            <label className="text-sm font-medium text-gray-700">Title</label>
-            <input
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              className="mt-1 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-teal-500"
-              placeholder="Enter blog title"
-              required
-            />
-          </div>
+          <div
+            className="bg-white rounded-lg p-6 w-80 shadow-lg"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <form onSubmit={handleCreateBlog}>
+              <div className="flex flex-col">
+                <span className="font-bold font-sans text-2xl text-gray-700 flex items-center justify-center">
+                  Add BLOG
+                </span>
+                <label className="text-sm font-medium text-gray-700">
+                  Title
+                </label>
+                <input
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  className="mt-1 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-teal-500"
+                  placeholder="Enter blog title"
+                  required
+                />
+              </div>
 
-          <div className="flex flex-col">
-            <label className="text-sm font-medium text-gray-700">Content</label>
-            <input
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              className="mt-1 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-teal-500"
-              placeholder="Write your content"
-              required
-            />
-          </div>
+              <div className="flex flex-col mt-2">
+                <label className="text-sm font-medium text-gray-700">
+                  Content
+                </label>
+                <input
+                  value={content}
+                  onChange={(e) => setContent(e.target.value)}
+                  className="mt-1 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-teal-500"
+                  placeholder="Write your content"
+                  required
+                />
+              </div>
 
-          <div className="flex items-center justify-between">
-            <button
-              type="button"
-              onClick={() => setOpenCreateBlog(false)}
-              className="font-semibold bg-teal-600 text-white py-2 px-4 rounded hover:bg-teal-700 transition"
-            >
-              cancel
-            </button>
-            <button
-              type="submit"
-              className="font-semibold bg-teal-600 text-white py-2 px-4 rounded hover:bg-teal-700 transition"
-            >
-              submit
-            </button>
+              <div className="flex items-center justify-between mt-3">
+                <button
+                  type="button"
+                  onClick={() => setOpenCreateBlog(false)}
+                  className="font-semibold bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-700 transition"
+                >
+                  cancel
+                </button>
+                <button
+                  type="submit"
+                  className="font-semibold bg-teal-600 text-white py-2 px-4 rounded hover:bg-teal-700 transition"
+                >
+                  submit
+                </button>
+              </div>
+            </form>
           </div>
-        </form>
+        </div>
       )}
 
       {isCreated && (

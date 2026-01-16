@@ -86,62 +86,77 @@ export const BlogList = () => {
                 from: {b.user_name === currentUser ? "Me" : b.user_name}
               </span>
             </div>
-
-            {/* Blog update */}
-            {updateBlog?.id === b.id && (
-              <form onSubmit={handleUpdateBlog}>
-                <input
-                  type="text"
-                  name="title"
-                  value={updateBlog?.title}
-                  onChange={(e) =>
-                    setUpdateBlog({
-                      ...updateBlog,
-                      title: e.target.value,
-                    } as BlogTypes)
-                  }
-                />
-
-                <input
-                  type="text"
-                  name="content"
-                  value={updateBlog?.content}
-                  onChange={(e) =>
-                    setUpdateBlog({
-                      ...updateBlog,
-                      content: e.target.value,
-                    } as BlogTypes)
-                  }
-                />
-
-                <div className="flex gap-2 mt-2">
-                  <button
-                    type="submit"
-                    className="px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700 transition"
-                  >
-                    Save
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setUpdateBlog(null)}
-                    className="px-3 py-1 bg-gray-300 text-gray-800 rounded hover:bg-gray-400 transition"
-                  >
-                    Cancel
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => b.id !== undefined && handleDeleteBlog(b.id)}
-                    className="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 transition flex items-center justify-center"
-                  >
-                    <Trash className="w-5 h-5" />
-                  </button>
-                </div>
-              </form>
-            )}
           </div>
         ))}
+
+        {updateBlog && (
+          <div
+            className="fixed inset-0 bg-black/60 flex items-center justify-center z-50"
+            onClick={() => setUpdateBlog(null)}
+          >
+            <div
+              className="bg-white rounded-lg p-6 w-80 shadow-lg"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <form onSubmit={handleUpdateBlog} className="space-y-3">
+                <div className="flex flex-col">
+                  <div className="flex items-center justify-between">
+                    <span className="font-semibold text-gray-700 font-sans uppercase text-2xl ">
+                      update
+                    </span>
+
+                    <button
+                      type="button"
+                      title="delete"
+                      onClick={() =>
+                        updateBlog.id && handleDeleteBlog(updateBlog.id)
+                      }
+                      className="text-red-600 hover:bg-gray-300 p-2 rounded"
+                    >
+                      <Trash size={16} />
+                    </button>
+                  </div>
+                  <label className="text-sm font-medium text-gray-700 mt-6">
+                    Title
+                  </label>
+                  <input
+                    type="text"
+                    value={updateBlog.title}
+                    onChange={(e) =>
+                      setUpdateBlog({ ...updateBlog, title: e.target.value })
+                    }
+                    className="mt-1 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-teal-500"
+                  />
+                  <label className="text-sm font-medium text-gray-700 mt-3">
+                    Content
+                  </label>
+                  <input
+                    type="text"
+                    value={updateBlog.content}
+                    onChange={(e) =>
+                      setUpdateBlog({ ...updateBlog, content: e.target.value })
+                    }
+                    className="mt-1 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-teal-500"
+                  />
+
+                  <div className="flex items-cener justify-between gap-2 pt-3">
+                    <button
+                      type="button"
+                      onClick={() => setUpdateBlog(null)}
+                      className="bg-gray-300 px-3 py-1 rounded"
+                    >
+                      Cancel
+                    </button>
+
+                    <button className="bg-green-600 text-white px-3 py-1 rounded">
+                      Save
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
 
         {isBlogDeleted && (
           <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
@@ -173,7 +188,6 @@ export const BlogList = () => {
                 <h2 className="text-lg font-semibold text-gray-800 mb-2">
                   Update Successfully
                 </h2>
-                <Trash className="green-red-700" />
               </div>
               <p className="text-sm text-gray-600 mb-4">
                 Your blog post has been updated.
