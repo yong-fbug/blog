@@ -79,15 +79,15 @@ export const BlogCreate = () => {
                 <button
                   type="button"
                   onClick={() => setOpenCreateBlog(false)}
-                  className="font-semibold bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-700 transition"
+                  className="font-semibold  text-gray-600 py-2 px-4 rounded hover:bg-gray-200 transition"
                 >
-                  cancel
+                  Cancel
                 </button>
                 <button
                   type="submit"
                   className="font-semibold bg-teal-600 text-white py-2 px-4 rounded hover:bg-teal-700 transition"
                 >
-                  submit
+                  Submit
                 </button>
               </div>
             </form>

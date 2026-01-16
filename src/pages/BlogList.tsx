@@ -6,7 +6,7 @@ import {
   updateBlogs,
 } from "../features/blog/blogAction";
 import { supabase } from "../services/supaBaseClient";
-import { Edit, Trash } from "lucide-react";
+import { Edit, Trash, X } from "lucide-react";
 import type { BlogTypes } from "../features/blog/types";
 
 export const BlogList = () => {
@@ -17,6 +17,7 @@ export const BlogList = () => {
   const [updateBlog, setUpdateBlog] = useState<BlogTypes | null>(null);
   const [isBlogDeleted, setIsBlogDeleted] = useState<boolean>(false);
   const [isBlogUpdated, setIsBlogUpdated] = useState<boolean>(false);
+  const [openBlog, setOpenBlog] = useState<BlogTypes | null>(null);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -58,23 +59,27 @@ export const BlogList = () => {
   return (
     <div className="max-w-3xl mx-auto p-6 flex items-center justify-end">
       <div className="space-y-4 ">
-        {/* blog list */}
+        {/* BLOG LIST */}
         {blogs.map((b) => (
           <div
             key={b.id}
             className={`w-3xs  bg-white shadow-md p-4 rounded-lg 
             border border-gray-200 hover:shadow-lg transition`}
+            onClick={() => setOpenBlog(b)}
           >
             <div className="flex-row justify-between items-center mb-2">
               <div className="flex items-center justify-between">
                 <h2 className="text-lg text-gray-800 font-semibold">
                   {b.title}
                 </h2>
-                {/* edit button */}
+
                 {b.user_name === currentUser && (
                   <span>
                     <Edit
-                      onClick={() => setUpdateBlog(b)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setUpdateBlog(b);
+                      }}
                       size={20}
                       className="hover:text-green-600 transition"
                     />
@@ -89,6 +94,41 @@ export const BlogList = () => {
           </div>
         ))}
 
+        {/* OPEN BLOG MODAL */}
+        {openBlog && (
+          <div
+            className="fixed inset-0 bg-black/60 flex items-center justify-center z-50"
+            onClick={() => setOpenBlog(null)}
+          >
+            <div
+              className="bg-white rounded-xl p-6 max-w-lg w-full shadow-lg"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-xl font-semibold text-gray-800">
+                  {openBlog.title}
+                </h2>
+                <button
+                  onClick={() => setOpenBlog(null)}
+                  className="text-gray-500 hover:text-gray-800"
+                >
+                  <X />
+                </button>
+              </div>
+
+              <p className="text-gray-700 whitespace-pre-line leading-relaxed">
+                {openBlog.content}
+              </p>
+
+              <div className="mt-4 text-sm text-gray-500">
+                Author:{" "}
+                {openBlog.user_name === currentUser ? "Me" : openBlog.user_name}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* UPDATE BLOG */}
         {updateBlog && (
           <div
             className="fixed inset-0 bg-black/60 flex items-center justify-center z-50"
@@ -107,13 +147,10 @@ export const BlogList = () => {
 
                     <button
                       type="button"
-                      title="delete"
-                      onClick={() =>
-                        updateBlog.id && handleDeleteBlog(updateBlog.id)
-                      }
-                      className="text-red-600 hover:bg-gray-300 p-2 rounded"
+                      onClick={() => setUpdateBlog(null)}
+                      className="text-gray-500 hover:text-gray-800"
                     >
-                      <Trash size={16} />
+                      <X />
                     </button>
                   </div>
                   <label className="text-lg font-medium text-gray-700 mt-6">
@@ -142,10 +179,12 @@ export const BlogList = () => {
                   <div className="flex items-cener justify-between gap-2 pt-3">
                     <button
                       type="button"
-                      onClick={() => setUpdateBlog(null)}
-                      className="font-md font-semibold bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-700 transition"
+                      onClick={() =>
+                        updateBlog.id && handleDeleteBlog(updateBlog.id)
+                      }
+                      className="text-gray-700 hover:text-red-600 transition p-2 rounded font-semibold"
                     >
-                      Cancel
+                      {/* <Trash size={16} /> */}Delete
                     </button>
 
                     <button className="font-md font-semibold bg-teal-600 text-white py-2 px-4 rounded hover:bg-teal-700 transition">
@@ -158,6 +197,7 @@ export const BlogList = () => {
           </div>
         )}
 
+        {/* MODAL DELETE */}
         {isBlogDeleted && (
           <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
             <div className="bg-white rounded-lg p-6 w-80 shadow-lg">
@@ -181,6 +221,7 @@ export const BlogList = () => {
           </div>
         )}
 
+        {/* MODAL UPDATE */}
         {isBlogUpdated && (
           <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
             <div className="bg-white rounded-lg p-6 w-80 shadow-lg">
@@ -203,6 +244,7 @@ export const BlogList = () => {
           </div>
         )}
 
+        {/* BUTTON NEXT/PREV */}
         <div className="flex justify-between mt-6">
           <button
             onClick={() => setPage((p) => Math.max(p - 1, 0))}
