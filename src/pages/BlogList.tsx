@@ -116,7 +116,7 @@ export const BlogList = () => {
                       <Trash size={16} />
                     </button>
                   </div>
-                  <label className="text-sm font-medium text-gray-700 mt-6">
+                  <label className="text-lg font-medium text-gray-700 mt-6">
                     Title
                   </label>
                   <input
@@ -127,7 +127,7 @@ export const BlogList = () => {
                     }
                     className="mt-1 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-teal-500"
                   />
-                  <label className="text-sm font-medium text-gray-700 mt-3">
+                  <label className="text-lg font-medium text-gray-700 mt-3">
                     Content
                   </label>
                   <input
@@ -143,12 +143,12 @@ export const BlogList = () => {
                     <button
                       type="button"
                       onClick={() => setUpdateBlog(null)}
-                      className="bg-gray-300 px-3 py-1 rounded"
+                      className="font-md font-semibold bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-700 transition"
                     >
                       Cancel
                     </button>
 
-                    <button className="bg-green-600 text-white px-3 py-1 rounded">
+                    <button className="font-md font-semibold bg-teal-600 text-white py-2 px-4 rounded hover:bg-teal-700 transition">
                       Save
                     </button>
                   </div>

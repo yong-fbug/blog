@@ -50,7 +50,7 @@ export const BlogCreate = () => {
                 <span className="font-bold font-sans text-2xl text-gray-700 flex items-center justify-center">
                   Add BLOG
                 </span>
-                <label className="text-sm font-medium text-gray-700">
+                <label className="text-lg font-medium text-gray-700">
                   Title
                 </label>
                 <input
@@ -63,7 +63,7 @@ export const BlogCreate = () => {
               </div>
 
               <div className="flex flex-col mt-2">
-                <label className="text-sm font-medium text-gray-700">
+                <label className="text-lg font-medium text-gray-700">
                   Content
                 </label>
                 <input
